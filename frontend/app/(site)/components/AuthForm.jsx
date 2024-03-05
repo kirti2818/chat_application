@@ -71,8 +71,17 @@ const AuthForm = () => {
             <FormButton type = "submit" text="Sign Up" />
           </div>
           <p className=" text-[14px] font-semibold">Or</p>
-          <div className="w-full">
-            <FormButton text="Continue With Google" />
+          <div className="w-full flex gap-3">
+          <Link href="http://localhost:8080/api/auth/google">
+          <FormButton
+            text="Continue With Github"
+          />
+        </Link>
+        <Link href="http://localhost:8080/api/auth/google">
+          <FormButton
+            text="Continue With Google"
+          />
+        </Link>
           </div>
           <p className=" text-[14px] font-semibold">
             Already Have Account?{" "}

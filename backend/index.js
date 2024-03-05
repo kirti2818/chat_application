@@ -32,23 +32,24 @@ app.get("/", async (req, res) => {
   return res.send("Hello");
 });
 
-app.get('/auth/google',
+app.get('/api/auth/google',
   passport.authenticate('google', { scope:
       [ 'email', 'profile' ] }
 ));
 
-app.get( '/auth/google/callback',
+app.get( '/api/auth/google/callback',
     passport.authenticate( 'google', {
-        successRedirect: '/auth/google/success',
-        failureRedirect: '/auth/google/failure'
+        successRedirect: '/api/auth/google/success',
+        failureRedirect: '/api/auth/google/failure'
 }));
 
-app.get("/auth/google/success",async(req,res)=>{
+app.get("/api/auth/google/success",async(req,res)=>{
   console.log("hurray",req.user)
-  res.send("hurray !!")
+  let cookieOption = { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true };
+  return res.cookie("chat_token",req.user?.token,cookieOption).status(200).redirect(`${process.env.FRONTEND_URL}`)
 })
 
-app.get("/auth/google/failure",async(req,res)=>{
+app.get("/api/auth/google/failure",async(req,res)=>{
   console.log("hurray!")
   res.send("failed !!")
 })
