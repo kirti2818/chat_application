@@ -2,17 +2,28 @@
 import FormButton from "@/core/FormButton";
 import FormInput from "@/core/FormInput";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import PasswordInput from "./PasswordInput";
+import useSignup from "@/libs/mutations/Auth/useSignUp";
+import {useRouter } from "next/navigation";
 
 const AuthForm = () => {
   const { control, handleSubmit } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter()
+  const {mutate : CreateUser , isLoading : CreateUserLoading , isError : CreateUserError , isSuccess:CreateUserSuccess} = useSignup()
 
   const onSubmit = (data) => {
     console.log(data);
+    CreateUser(data)
   };
+  useEffect(()=>{
+    if(CreateUserSuccess){
+      router.push("/email-otp")
+    }
+
+  },[CreateUserSuccess])
   return (
     <div className="flex justify-center w-[500px] bg-white border rounded-xl p-3 py-7">
       <form
@@ -38,7 +49,7 @@ const AuthForm = () => {
         render={({ field: { onChange, value } }) => {
           return (
             <div>
-              <FormInput onChange={onChange} value = {value} label={"Email"} />
+              <FormInput type="email" onChange={onChange} value = {value} label={"Email"} />
             </div>
           );
         }}
@@ -50,7 +61,7 @@ const AuthForm = () => {
       render={({ field: { onChange, value } }) => {
         return (
           <div>
-            <PasswordInput showPassword={showPassword} setShowPassword={setShowPassword} onChange={onChange} value = {value} label={"Password"} />
+            <PasswordInput type={showPassword?"text":"password"} showPassword={showPassword} setShowPassword={setShowPassword} onChange={onChange} value = {value} label={"Password"} />
           </div>
         );
       }}

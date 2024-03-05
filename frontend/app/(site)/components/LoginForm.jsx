@@ -5,13 +5,21 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import PasswordInput from "./PasswordInput";
+import useLogin from "@/libs/mutations/Auth/useLogin";
 
 const LoginForm = () => {
     const { control, handleSubmit } = useForm();
     const [showPassword, setShowPassword] = useState(false);
+    const {mutate : LoginUser , isLoading : LoginUserLoading , isError : LoginUserError , isSuccess:LoginUserSuccess} = useLogin()
+
+    const onSubmit = (data) => {
+      console.log(data);
+      LoginUser(data)
+    };
+
   return (
     <div className="flex justify-center w-[500px] bg-white border rounded-xl p-3 py-7">
-      <form className="flex flex-col gap-5 w-[400px]">
+      <form  onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 w-[400px]">
       <Controller
       name="email"
       control={control}
@@ -31,14 +39,14 @@ const LoginForm = () => {
     render={({ field: { onChange, value } }) => {
       return (
         <div>
-          <PasswordInput showPassword={showPassword} setShowPassword={setShowPassword} onChange={onChange} value = {value} label={"Password"} />
+          <PasswordInput type={showPassword?"text":"password"} showPassword={showPassword} setShowPassword={setShowPassword} onChange={onChange} value = {value} label={"Password"} />
         </div>
       );
     }}
   />
         <div className=" flex flex-col gap-2 items-center">
       <div className="w-full">
-      <FormButton text= "Sign In" />
+      <FormButton type="submit" text= "Sign In" />
       </div>
        <p className=" text-[14px] font-semibold">Or</p>
        <div className="w-full">

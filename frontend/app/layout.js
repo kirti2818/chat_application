@@ -1,10 +1,16 @@
-import { Inter } from "next/font/google";
+import { Inter,Poppins } from "next/font/google";
 import "./globals.css";
 import TanstackQuery from "@/providers/TanstackQuery";
 import dynamic from "next/dynamic";
 import NxtProvider from "@/providers/NextProvider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const poppins = Poppins({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Chat App",
@@ -14,7 +20,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={poppins.className}>
+      <Toaster />
         <TanstackQuery>
           <NxtProvider>{children}</NxtProvider>
         </TanstackQuery>
