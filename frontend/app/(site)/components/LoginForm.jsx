@@ -72,19 +72,23 @@ const LoginForm = () => {
             <FormButton type="submit" text="Sign In" />
           </div>
           <p className=" text-[14px] font-semibold">Or</p>
-          <div className="w-full flex gap-1">
-          <Link href="http://localhost:8080/api/auth/google">
-          <FormButton
-          startContent={<FaGithub className="h-5 w-5"/>}
-            text="Continue With Github"
-          />
-        </Link>
-        <Link href="http://localhost:8080/api/auth/google">
-          <FormButton
-          startContent={<FaGithub className="h-5 w-5"/>}
-            text="Continue With Google"
-          />
-        </Link>
+          <div className="max-w-full flex gap-1 border border-red-700">
+            <div className="w-[200px]">
+              <Link href="http://localhost:8080/api/auth/google">
+                <FormButton
+                  startContent={<FaGithub className="h-4 w-4" />}
+                 
+                />
+              </Link>
+            </div>
+            <div className="w-[200px]">
+              <Link href="http://localhost:8080/api/auth/google">
+                <FormButton
+                  startContent={<FaGithub className="h-4 w-4" />}
+                  
+                />
+              </Link>
+            </div>
           </div>
           <p className=" text-[14px] font-semibold">
             Create an Account?{" "}
