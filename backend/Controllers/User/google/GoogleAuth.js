@@ -33,7 +33,7 @@ passport.use(
             {
               _id: findExistingUser._id,
               email: findExistingUser?.email,
-              email_verified: findExistingUser?.verified,
+              email_verified: findExistingUser?.emailVerified,
               user_name: findExistingUser?.user_name,
             },
             process.env.SECRET_KEY,
