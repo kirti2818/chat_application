@@ -39,6 +39,7 @@ const LoginController = async (req, res) => {
         message: findUser?.emailVerified
           ? "Login Successfully !"
           : "User Logged In Successfully ,Otp Has been send to your mail",
+          data : findUser,
         status: true,
       });
   } catch (error) {

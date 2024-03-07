@@ -28,6 +28,7 @@ passport.use(
         }
         const data = {
           message: "Login Successfully",
+          user : findExistingUser,
           token: jwt.sign(
             {
               _id: findExistingUser._id,

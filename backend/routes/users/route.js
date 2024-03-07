@@ -6,6 +6,7 @@ const ResendEmailOTP = require("../../Controllers/User/ResendEmailOTP.Controller
 const AuthMiddleware = require("../../middleware/IsAuth");
 const passport = require("../../Controllers/User/google/GoogleAuth");
 const GoogleAPI = require("../../Controllers/User/google/GoogleAPI");
+const GetMyData = require("../../Controllers/User/GetMyData");
 
 const UserRouter = express.Router();
 
@@ -16,6 +17,7 @@ UserRouter.post("/googleAuthentication", GoogleAPI);
 UserRouter.use(AuthMiddleware);
 UserRouter.post("/veriFyEmail", VerifyEmail);
 UserRouter.post("/resendEmail", ResendEmailOTP);
+UserRouter.get("/getMyData", GetMyData);
 
 
 module.exports = UserRouter;
