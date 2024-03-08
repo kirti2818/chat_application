@@ -8,6 +8,8 @@ const passport = require("../../Controllers/User/google/GoogleAuth");
 const GoogleAPI = require("../../Controllers/User/google/GoogleAPI");
 const GetMyData = require("../../Controllers/User/GetMyData");
 const AuthMiddleware = require("../../middleware/isAuth");
+const LogoutController = require("../../Controllers/User/Logout.Controller");
+const GetAllUsers = require("../../Controllers/User/GetAllUsers");
 
 const UserRouter = express.Router();
 
@@ -19,6 +21,8 @@ UserRouter.use(AuthMiddleware);
 UserRouter.post("/veriFyEmail", VerifyEmail);
 UserRouter.post("/resendEmail", ResendEmailOTP);
 UserRouter.get("/getMyData", GetMyData);
+UserRouter.get("/logout", LogoutController);
+UserRouter.get("/getAllUsers", GetAllUsers);
 
 
 module.exports = UserRouter;
