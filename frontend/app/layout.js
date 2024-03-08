@@ -4,6 +4,7 @@ import TanstackQuery from "@/providers/TanstackQuery";
 import dynamic from "next/dynamic";
 import NxtProvider from "@/providers/NextProvider";
 import { Toaster } from "react-hot-toast";
+import StoreProvider from "@/providers/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,10 +22,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
+      
       <Toaster />
         <TanstackQuery>
+        <StoreProvider>
           <NxtProvider>{children}</NxtProvider>
+          </StoreProvider>
         </TanstackQuery>
+       
       </body>
     </html>
   );

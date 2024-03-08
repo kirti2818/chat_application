@@ -17,9 +17,9 @@ const Sidebar = ({ children }) => {
         onOpen={OpenSearchModal}
         isOpen={OpenSearchModal}
         onClose={() => setOpenSearchModal(false)}
-        heading="Search User"
+        heading="Find User"
       >
-        <SearchPage />
+        <SearchPage setOpenSearchModal={setOpenSearchModal} />
       </DynamicModal>
       <div className="flex flex-col items-center gap-6 w-[70px] border rounded-lg shadow-lg bg-blue-100 p-2 ">
         <div className="">
@@ -58,7 +58,7 @@ const Sidebar = ({ children }) => {
         </div>
         <div
           onClick={() => setOpenSearchModal(true)}
-          className="text-blue-gray-300 "
+          className="cursor-pointer text-blue-gray-300 "
         >
           <FaSearch className="w-11 h-11" />
         </div>

@@ -58,8 +58,8 @@ io.on("connection", (socket) => {
 
   // Handle disconnect event
   socket.on("disconnect", async () => {
-    console.log("A user disconnected");
-    console.log(socket.id);
+    // console.log("A user disconnected");
+    // console.log(socket.id);
     await DeleteUserFromSocket(socket.id);
   });
 });

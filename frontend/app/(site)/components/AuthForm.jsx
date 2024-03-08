@@ -30,6 +30,18 @@ const AuthForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-5 w-[400px]"
       >
+      <Controller
+          name="name"
+          control={control}
+          rules = {{required : "Name is required"}}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <div>
+                <FormInput onChange={onChange} value = {value} label={"Name"} />
+              </div>
+            );
+          }}
+        />
         <Controller
           name="user_name"
           control={control}
