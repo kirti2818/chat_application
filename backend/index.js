@@ -19,13 +19,7 @@ const io = new Server(httpServer, {
   },
 });
 
-app.use(
-  session({
-    secret: "your_secret_key", // Add a secret key for session encryption
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 
 app.use(passport.initialize());
 app.use(passport.session());
