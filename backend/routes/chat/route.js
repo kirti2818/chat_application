@@ -5,7 +5,7 @@ const GetSingleChat = require("../../Controllers/Chats/SingleChat/GetSingleChat"
 const AddMemberInGroup = require("../../Controllers/Chats/SingleChat/AddMemberInGroup");
 const AccessChat = require("../../Controllers/Chats/SingleChat/AccessChat");
 const GetAllChats = require("../../Controllers/Chats/GetAllChats");
-const AuthMiddleware = require("../../middleware/isAuth");
+const AuthMiddleware = require("../../middleware/IsAuth");
 const ChatRouter = express.Router();
 
 ChatRouter.use(AuthMiddleware)
