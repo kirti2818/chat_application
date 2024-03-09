@@ -31,7 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 const cors = require("cors");
 const corsOptions = {
-  origin: ["http://localhost:3000","https://chat-application-ruddy-five.vercel.app/"],
+  origin: ["http://localhost:3000","https://chat-application-ruddy-five.vercel.app"],
   credentials: true,
 };
 
