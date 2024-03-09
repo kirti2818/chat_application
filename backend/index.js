@@ -42,19 +42,35 @@ const connect = require("./config/db");
 const allRoutes = require("./routes");
 const AddAndUpdateSocket = require("./Controllers/Socket/Adduser");
 const DeleteUserFromSocket = require("./Controllers/Socket/DeleteUserFromSocket");
+const GetSockets = require("./utils/getSocket");
 
 app.use("/api", allRoutes);
 
 io.on("connection", (socket) => {
-  console.log("A user connected", socket.id);
+  console.log("Initail connection",socket.id);
+  // io.emit('test',"hsflsjfljslf")
+  // console.log("A user connected", socket.id);
 
   // Handle user login event
   socket.on("login", async (userId) => {
-    console.log("USERID", userId);
+    // console.log("USERID", userId);
     // Store user ID and socket ID in database
     const Result = await AddAndUpdateSocket(userId, socket);
     console.log(Result);
   });
+
+  socket.on("send_new_message",async(data)=>{
+  if(!data?.content){
+    console.log("Content is not Here")
+      return;
+     
+  }
+   console.log(data)
+   const sockets = await GetSockets(data)
+   console.log(sockets,"SOCKET")
+   io.to(sockets[0]).emit("test",data?.content)
+
+  })
 
   // Handle disconnect event
   socket.on("disconnect", async () => {

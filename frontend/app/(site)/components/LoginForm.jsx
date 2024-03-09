@@ -7,7 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 import PasswordInput from "./PasswordInput";
 import useLogin from "@/libs/mutations/Auth/useLogin";
 import useGoogleAuthentication from "@/libs/mutations/Auth/GoogleAuthentication";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const LoginForm = () => {
   const { control, handleSubmit } = useForm();
@@ -28,7 +28,6 @@ const LoginForm = () => {
   const onSubmit = (data) => {
     console.log(data);
     LoginUser(data);
-    
   };
 
   return (
@@ -73,21 +72,15 @@ const LoginForm = () => {
             <FormButton type="submit" text="Sign In" />
           </div>
           <p className=" text-[14px] font-semibold">Or</p>
-          <div className="max-w-full flex gap-1 border border-red-700">
+          <div className="max-w-full flex gap-1 ">
             <div className="w-[200px]">
               <Link href="http://localhost:8080/api/auth/google">
-                <FormButton
-                  startContent={<FaGithub className="h-4 w-4" />}
-                 
-                />
+                <FormButton startContent={<FaGoogle className="h-4 w-4" />} />
               </Link>
             </div>
             <div className="w-[200px]">
               <Link href="http://localhost:8080/api/auth/google">
-                <FormButton
-                  startContent={<FaGithub className="h-4 w-4" />}
-                  
-                />
+                <FormButton startContent={<FaGithub className="h-4 w-4" />} />
               </Link>
             </div>
           </div>

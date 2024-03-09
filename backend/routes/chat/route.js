@@ -12,9 +12,9 @@ ChatRouter.use(AuthMiddleware)
 
 ChatRouter.post("/newGroupChat", NewGroupChat);
 ChatRouter.get("/getMyGroups", GetMyGroups);
-ChatRouter.get("/getSingleChat", GetSingleChat);
 ChatRouter.patch("/addMemberInGroup", AddMemberInGroup);
 
+ChatRouter.get("/getSingleChat/:id", GetSingleChat);
 ChatRouter.post("/accessChat", AccessChat);
 ChatRouter.get("/getAllChats",GetAllChats)
 

@@ -1,7 +1,8 @@
-import {io} from 'socket.io-client';
+import { io } from "socket.io-client";
 
 const socket = io('http://localhost:8080', {
-  withCredentials: true, // Ensure to include credentials when making requests
-});
+      withCredentials: true,
+      // autoConnect:false // Ensure to include credentials when making requests
+    });
 
 export default socket;

@@ -7,6 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 import PasswordInput from "./PasswordInput";
 import useSignup from "@/libs/mutations/Auth/useSignUp";
 import {useRouter } from "next/navigation";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const AuthForm = () => {
   const { control, handleSubmit } = useForm();
@@ -83,18 +84,18 @@ const AuthForm = () => {
             <FormButton type = "submit" text="Sign Up" />
           </div>
           <p className=" text-[14px] font-semibold">Or</p>
-          <div className="w-full flex gap-3">
-          <Link href="http://localhost:8080/api/auth/google">
-          <FormButton
-            text="Continue With Github"
-          />
-        </Link>
-        <Link href="http://localhost:8080/api/auth/google">
-          <FormButton
-            text="Continue With Google"
-          />
-        </Link>
+          <div className="max-w-full flex gap-1 ">
+          <div className="w-[200px]">
+            <Link href="http://localhost:8080/api/auth/google">
+              <FormButton startContent={<FaGoogle className="h-4 w-4" />} />
+            </Link>
           </div>
+          <div className="w-[200px]">
+            <Link href="http://localhost:8080/api/auth/google">
+              <FormButton startContent={<FaGithub className="h-4 w-4" />} />
+            </Link>
+          </div>
+        </div>
           <p className=" text-[14px] font-semibold">
             Already Have Account?{" "}
             <span>
