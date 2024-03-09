@@ -26,7 +26,7 @@ const io = new Server(httpServer, {
   },
 });
 
-app.use(session({ secret: process.env.SECRET_KEY, resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.SECRET_KEY, resave: true, saveUninitialized: false }));
 
 app.use(passport.initialize());
 app.use(passport.session());
