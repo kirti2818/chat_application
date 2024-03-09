@@ -8,6 +8,7 @@ import PasswordInput from "./PasswordInput";
 import useLogin from "@/libs/mutations/Auth/useLogin";
 import useGoogleAuthentication from "@/libs/mutations/Auth/GoogleAuthentication";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { baseURL } from "@/app/api";
 
 const LoginForm = () => {
   const { control, handleSubmit } = useForm();
@@ -74,12 +75,12 @@ const LoginForm = () => {
           <p className=" text-[14px] font-semibold">Or</p>
           <div className="max-w-full flex gap-1 ">
             <div className="w-[200px]">
-              <Link href="http://localhost:8080/api/auth/google">
+              <Link href={`${baseURL}auth/google`}>
                 <FormButton startContent={<FaGoogle className="h-4 w-4" />} />
               </Link>
             </div>
             <div className="w-[200px]">
-              <Link href="http://localhost:8080/api/auth/google">
+              <Link href={`${baseURL}auth/google`}>
                 <FormButton startContent={<FaGithub className="h-4 w-4" />} />
               </Link>
             </div>
