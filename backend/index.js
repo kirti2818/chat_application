@@ -9,6 +9,14 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 
+const corsOptions = {
+  origin: ["http://localhost:3000","https://chat-application-ruddy-five.vercel.app"],
+  credentials: true,
+};
+
+app.use(cookieParser());
+app.use(cors(corsOptions));
+
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
@@ -22,13 +30,7 @@ app.use(session({ secret: process.env.SECRET_KEY, resave: false, saveUninitializ
 
 app.use(passport.initialize());
 app.use(passport.session());
-const corsOptions = {
-  origin: ["http://localhost:3000","https://chat-application-ruddy-five.vercel.app"],
-  credentials: true,
-};
 
-app.use(cookieParser());
-app.use(cors(corsOptions));
 const connect = require("./config/db");
 const allRoutes = require("./routes");
 const AddAndUpdateSocket = require("./Controllers/Socket/Adduser");
