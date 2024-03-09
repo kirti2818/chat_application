@@ -29,8 +29,8 @@ const corsOptions = {
   credentials: true,
 };
 
-app.use(cors(corsOptions));
 app.use(cookieParser());
+app.use(cors(corsOptions));
 const connect = require("./config/db");
 const allRoutes = require("./routes");
 const AddAndUpdateSocket = require("./Controllers/Socket/Adduser");
