@@ -66,10 +66,10 @@ const Conversation = ({ RecentChatData }) => {
           </div>
           <div className="pt-20 px-2 pb-14  w-full h-full overflow-auto scrollbar-hide ">
             <div className="flex flex-col gap-2">
-              {[1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2, 1, 1, 2, 2].map((el) => {
+              {[1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2, 1, 1, 2, 2].map((el,i) => {
                 if (el == 1) {
                   return (
-                    <div className=" flex w-[100px] pl-2">
+                    <div key={i} className=" flex w-[100px] pl-2">
                       {" "}
                       <p
                         className="border rounded-md bg-blue-300 text-white text-[18px] p-1 max-w-[350px]"
@@ -81,7 +81,7 @@ const Conversation = ({ RecentChatData }) => {
                   );
                 } else {
                   return (
-                    <div className=" w-full flex justify-end pr-2">
+                    <div key={i}  className=" w-full flex justify-end pr-2">
                       {" "}
                       <p
                         className="border rounded-md bg-gray-200 text-gray-500 text-[18px] p-1 max-w-[350px]"

@@ -18,9 +18,10 @@ const UsersSidebar = ({ RecentChatData }) => {
       {!GetAllChatsLoading &&
         !GetAllChatsError &&
         GetAllChatsSuccess &&
-        GetAllChats?.map((el) => {
+        GetAllChats?.map((el,i) => {
           return (
             <Tooltip
+            key={i} 
               placement={"right-end"}
               showArrow
               content={

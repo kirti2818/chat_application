@@ -52,9 +52,9 @@ const SearchPage = ({setOpenSearchModal}) => {
         {search &&
           !GetAllUsersLoading &&
           !GetAllUsersError &&
-          GetAllUsers?.map((el) => {
+          GetAllUsers?.map((el,i) => {
             return (
-              <div onClick={()=>handleChatUser(el?._id)} className="cursor-pointer w-full min-h-[50px] border rounded-md p-2">
+              <div key={i}  onClick={()=>handleChatUser(el?._id)} className="cursor-pointer w-full min-h-[50px] border rounded-md p-2">
                 <User
                   name={el?.name}
                   description={el?.email}
