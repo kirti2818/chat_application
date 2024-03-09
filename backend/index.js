@@ -3,12 +3,11 @@ const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const passport = require("./Controllers/User/google/GoogleAuth");
-
 const app = express();
 app.use(express.json());
-
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const cors = require("cors");
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -23,7 +22,6 @@ app.use(session({ secret: process.env.SECRET_KEY, resave: false, saveUninitializ
 
 app.use(passport.initialize());
 app.use(passport.session());
-const cors = require("cors");
 const corsOptions = {
   origin: ["http://localhost:3000","https://chat-application-ruddy-five.vercel.app"],
   credentials: true,
