@@ -47,7 +47,7 @@ const GetSockets = require("./utils/getSocket");
 app.use("/api", allRoutes);
 
 io.on("connection", (socket) => {
-  console.log("Initail connection",socket.id);
+  // console.log("Initail connection",socket.id);
   // io.emit('test',"hsflsjfljslf")
   // console.log("A user connected", socket.id);
 
