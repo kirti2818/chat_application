@@ -3,7 +3,8 @@ import axios from "axios";
 
 // export const baseURL = "http://localhost:8080/api/";
 export const baseURL = "https://chat-application-gi09.onrender.com/api/"
-export const clientUrl = "http://localhost:3000/";
+// export const clientUrl = "http://localhost:3000/";
+export const clientUrl = "https://chat-application-ruddy-five.vercel.app/"
 import { getCookie } from "cookies-next";
 
 let token;

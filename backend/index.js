@@ -13,7 +13,7 @@ const { Server } = require("socket.io");
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000","https://chat-application-ruddy-five.vercel.app"],
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -31,7 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 const cors = require("cors");
 const corsOptions = {
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000","https://chat-application-ruddy-five.vercel.app/"],
   credentials: true,
 };
 
