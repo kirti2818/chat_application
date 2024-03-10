@@ -3,7 +3,7 @@ import { FaCamera } from "react-icons/fa";
 // import { io } from "socket.io-client";
 import { useEffect } from "react";
 import socket from "@/utils/Socket";
-import useMe from "@/libs/queries/Auth/useMe"
+import useMe from "@/libs/queries/Auth/useMe";
 import { useSelector } from "react-redux";
 import UsersSidebar from "./(site)/components/UsersSidebar";
 import Conversation from "./(site)/components/Conversation";
@@ -21,25 +21,12 @@ export default function Home() {
     }
   }, [getDataLoading, getData]);
 
-  useEffect(()=>{
-     // const socket = io('http://localhost:8080', {
-  //   withCredentials: true,
-  //   // autoConnect:false // Ensure to include credentials when making requests
-  // });
-    socket.connect()
-    // socket.on('connect',(data)=>{
-    //     console.log("connected",data)
-    // })
-    socket.on("receieve_message", (data) => {
-      console.log(data,"received message");
-    });
-    socket.on('test',(data)=>{
-      console.log(data,"Test")
-    })
-    return ()=>{
-      socket.disconnect()
-    }
-  },[])
+  useEffect(() => {
+    socket.connect();
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <div>

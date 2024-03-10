@@ -7,8 +7,8 @@ import socket from "@/utils/Socket";
 import useMe from "@/libs/queries/Auth/useMe";
 
 const Conversation = ({ RecentChatData }) => {
-  console.log(RecentChatData);
   const [message, setMessage] = useState();
+  const [AllMessages, setAllMessages] = useState([]);
   const {
     data: getSingleChat,
     isLoading: getSingleChatLoading,
@@ -32,13 +32,33 @@ const Conversation = ({ RecentChatData }) => {
     };
     console.log(data);
     socket.emit("send_new_message", data);
+    let pushMessage = [...AllMessages, { content: message, sender: "you" }];
+    setAllMessages(pushMessage);
   };
 
-  useEffect(()=>{
-    // socket.on("send_new_message",(data)=>{
-    //   console.log(data)
-    // })
-  },[])
+  useEffect(() => {
+    socket.connect();
+
+    // socket.on("test", (data) => {
+    //   console.log(data, "test");
+    //   // let pushMessage = [...AllMessages, { content: data, sender: "other" }];
+    //   setAllMessages((prevMessages) => [...prevMessages, { content: data, sender: "other" }]);
+    // });
+
+    socket.on("receieve_message", (data) => {
+      console.log(data, "received message");
+      // let pushMessage = [...AllMessages, { content: data, sender: "other" }];
+      setAllMessages((prevMessages) => [
+        ...prevMessages,
+        { content: data, sender: "other" },
+      ]);
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  console.log(AllMessages);
 
   return (
     <div className="flex-1 flex relative h-full border rounded-md shadow-lg bg-white ">
@@ -66,28 +86,28 @@ const Conversation = ({ RecentChatData }) => {
           </div>
           <div className="pt-20 px-2 pb-14  w-full h-full overflow-auto scrollbar-hide ">
             <div className="flex flex-col gap-2">
-              {[1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2, 1, 1, 2, 2].map((el,i) => {
-                if (el == 1) {
+              {AllMessages.map((el, i) => {
+                if (el.sender === "other") {
                   return (
-                    <div key={i} className=" flex w-[100px] pl-2">
+                    <div key={i} className=" flex  pl-2">
                       {" "}
                       <p
                         className="border rounded-md bg-blue-300 text-white text-[18px] p-1 max-w-[350px]"
                         style={{ overflowWrap: "break-word" }}
                       >
-                        suorertyuiopityresuhjikoplkjhfdsfghjkl;,mnbvccvbnm,./mnbvcsdfgoiytewertyuioiouytrewrtyuioiuytretyuioknbvcxnm,
+                        {el.content}
                       </p>
                     </div>
                   );
                 } else {
                   return (
-                    <div key={i}  className=" w-full flex justify-end pr-2">
+                    <div key={i} className=" w-full  flex justify-end pr-2">
                       {" "}
                       <p
                         className="border rounded-md bg-gray-200 text-gray-500 text-[18px] p-1 max-w-[350px]"
                         style={{ overflowWrap: "break-word" }}
                       >
-                        suorertyuiopityresuhjikoplkjhfdsfghjkl;,mnbvccvbnm,./mnbvcsdfgoiytewertyuioiouytrewrtyuioiuytretyuioknbvcxnm,
+                        {el.content}
                       </p>
                     </div>
                   );

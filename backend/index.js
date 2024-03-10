@@ -41,7 +41,7 @@ app.use("/api", allRoutes);
 
 io.on("connection", (socket) => {
   // console.log("Initail connection",socket.id);
-  // io.emit('test',"hsflsjfljslf")
+  io.emit('test',"hsflsjfljslf")
   // console.log("A user connected", socket.id);
 
   // Handle user login event
@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
    console.log(data)
    const sockets = await GetSockets(data)
    console.log(sockets,"SOCKET")
-   io.to(sockets[0]).emit("test",data?.content)
+   io.to(sockets[0]).emit("receieve_message",data?.content)
 
   })
 
