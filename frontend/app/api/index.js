@@ -21,7 +21,7 @@ const api = axios.create({
   withCredentials: true,
   baseURL,
   headers: {
-    token: token ? token : getCookies("chat_token"),
+    token: token ? token : getCookie("chat_token"),
     "Content-Type": "application/json",
   },
 });
