@@ -2,7 +2,7 @@ const UserModel = require("../../models/User/Auth.Schema");
 
 const GetAllUsers = async (req, res) => {
   const query = req.query;
-  console.log(query);
+  // console.log(query);
   try {
     const keyword = req.query.search
       ? {

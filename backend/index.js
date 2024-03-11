@@ -77,7 +77,7 @@ io.on("connection", (socket) => {
   if(addMessage){
     const sockets = await GetSockets(data)
     console.log(sockets,"SOCKET")
-    io.to(sockets[0]).emit("receieve_message",data?.content)
+    io.to(sockets[0]).emit("receieve_message",data)
   }
   
 
@@ -85,7 +85,7 @@ io.on("connection", (socket) => {
 
   // Handle disconnect event
   socket.on("disconnect", async () => {
-    // console.log("A user disconnected");
+    console.log("A user disconnected");
     // console.log(socket.id);
     await DeleteUserFromSocket(socket.id);
   });

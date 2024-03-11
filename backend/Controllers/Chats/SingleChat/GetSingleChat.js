@@ -4,7 +4,7 @@ const { ObjectId } = require("mongodb");
 const GetSingleChat = async (req, res) => {
   const userId = req.userId;
   const chatId = req.params.id;
-  console.log(userId,chatId);
+  // console.log(userId,chatId);
   try {
     const pipeline = [
       {

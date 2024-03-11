@@ -3,7 +3,7 @@ const ChatModel = require("../../../models/Chat/Chat.Schema");
 const AccessChat = async (req, res) => {
   const userId  = req.userId;
   const { OtherMemberId } = req.body;
-  console.log(OtherMemberId,userId)
+  // console.log(OtherMemberId,userId)
   try {
     if(userId.toString() === OtherMemberId.toString()){
         return res
