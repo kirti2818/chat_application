@@ -36,6 +36,7 @@ const allRoutes = require("./routes");
 const AddAndUpdateSocket = require("./Controllers/Socket/Adduser");
 const DeleteUserFromSocket = require("./Controllers/Socket/DeleteUserFromSocket");
 const GetSockets = require("./utils/getSocket");
+const AddMessage = require("./Controllers/Message/AddMessage");
 
 app.use("/api", allRoutes);
 
@@ -53,15 +54,20 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send_new_message",async(data)=>{
-  if(!data?.content){
-    console.log("Content is not Here")
+    console.log(data)
+  if(!data?.content || !data?.chatId || !data?.sender){
+    console.log("Please Give All Details")
       return;
      
   }
-   console.log(data)
-   const sockets = await GetSockets(data)
-   console.log(sockets,"SOCKET")
-   io.to(sockets[0]).emit("receieve_message",data?.content)
+
+  const addMessage = await AddMessage(data)
+  if(addMessage){
+    const sockets = await GetSockets(data)
+    console.log(sockets,"SOCKET")
+    io.to(sockets[0]).emit("receieve_message",data?.content)
+  }
+  
 
   })
 
