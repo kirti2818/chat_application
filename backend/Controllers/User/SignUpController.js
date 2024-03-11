@@ -8,7 +8,7 @@ const bcryptjs = require("bcryptjs");
 
 const SignUpController = async (req, res) => {
   const { email, user_name } = req.body;
-  let cookieOption = { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true };
+  let cookieOption = { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true , secure: true,sameSite : "none" };
 
   try {
     const findUser_name = await UserModel.findOne({ user_name });
