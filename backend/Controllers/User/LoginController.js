@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const LoginController = async (req, res) => {
   const { email, password } = req.body;
   console.log(req.body);
-  let cookieOption = { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true , secure: true };
+  let cookieOption = { maxAge: 3 * 24 * 60 * 60 * 1000 };
   try {
     const findUser = await UserModel.findOne({
       $or: [{ email }, { user_name: email }],

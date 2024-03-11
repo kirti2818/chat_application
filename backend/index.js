@@ -10,7 +10,10 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const corsOptions = {
-  origin: ["http://localhost:3000","https://chat-application-ruddy-five.vercel.app"],
+  origin: [
+    "http://localhost:3000",
+    "https://chat-application-ruddy-five.vercel.app",
+  ],
   credentials: true,
 };
 
@@ -20,13 +23,22 @@ app.use(cors(corsOptions));
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:3000","https://chat-application-ruddy-five.vercel.app"],
+    origin: [
+      "http://localhost:3000",
+      "https://chat-application-ruddy-five.vercel.app",
+    ],
     methods: ["GET", "POST"],
     credentials: true,
   },
 });
 
-app.use(session({ secret: process.env.SECRET_KEY, resave: true, saveUninitialized: false }));
+app.use(
+  session({
+    secret: process.env.SECRET_KEY,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -41,7 +53,7 @@ app.use("/api", allRoutes);
 
 io.on("connection", (socket) => {
   // console.log("Initail connection",socket.id);
-  io.emit('test',"hsflsjfljslf")
+  io.emit("test", "hsflsjfljslf");
   // console.log("A user connected", socket.id);
 
   // Handle user login event
@@ -52,18 +64,16 @@ io.on("connection", (socket) => {
     console.log(Result);
   });
 
-  socket.on("send_new_message",async(data)=>{
-  if(!data?.content){
-    console.log("Content is not Here")
+  socket.on("send_new_message", async (data) => {
+    if (!data?.content) {
+      console.log("Content is not Here");
       return;
-     
-  }
-   console.log(data)
-   const sockets = await GetSockets(data)
-   console.log(sockets,"SOCKET")
-   io.to(sockets[0]).emit("receieve_message",data?.content)
-
-  })
+    }
+    console.log(data);
+    const sockets = await GetSockets(data);
+    console.log(sockets, "SOCKET");
+    io.to(sockets[0]).emit("receieve_message", data?.content);
+  });
 
   // Handle disconnect event
   socket.on("disconnect", async () => {
