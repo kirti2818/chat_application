@@ -44,20 +44,20 @@ const SignUpController = async (req, res) => {
     const SendMail = await SendMailController({ MailOptions });
     await SaveOtp.save();
     await signup.save();
-    // let token = jwt.sign(
-    //   {
-    //     _id: signup?._id,
-    //     email: signup?.email,
-    //     user_name: signup?.user_name,
-    //     emailVerified: signup?.emailVerified,
-    //   },
-    //   process.env.SECRET_KEY,
-    //   { expiresIn: "1d" }
-    // );
-    // return res.cookie("chat_token", token, cookieOption).status(200).json({
-    //   message: "User Created Successfully Otp Has been send to your mail",
-    //   status: true,
-    // });
+    let token = jwt.sign(
+      {
+        _id: signup?._id,
+        email: signup?.email,
+        user_name: signup?.user_name,
+        emailVerified: signup?.emailVerified,
+      },
+      process.env.SECRET_KEY,
+      { expiresIn: "1d" }
+    );
+    return res.cookie("chat_token", token, cookieOption).status(200).json({
+      message: "User Created Successfully Otp Has been send to your mail",
+      status: true,
+    });
   } catch (error) {
     return res.status(400).json({ message: error.message, status: false });
   }
