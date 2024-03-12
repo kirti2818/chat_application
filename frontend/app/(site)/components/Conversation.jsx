@@ -5,19 +5,28 @@ import React, { useEffect, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import socket from "@/utils/Socket";
 import useMe from "@/libs/queries/Auth/useMe";
+import { useDispatch, useSelector } from "react-redux";
+import { AddChatMessageData } from "@/Slices/User.Slice";
 
 const Conversation = ({ RecentChatData }) => {
-  console.log(RecentChatData)
-  const [chatData , setChatData] = useState(RecentChatData)
-  const [message, setMessage] = useState();
-  const [AllMessages, setAllMessages] = useState([]);
+  const dispatch = useDispatch();
+  console.log(RecentChatData);
+  const [chatData, setChatData] = useState(RecentChatData);
+  const AllMessage = useSelector((store) => store.chatSlice.ChatMessageData);
+  console.log(AllMessage, "09876543234567");
+  const [message, setMessage] = useState([]);
   const {
     data: getSingleChat,
     isLoading: getSingleChatLoading,
     isError: getSingleChatError,
     isSuccess: getSingleChatSuccess,
   } = useGetSingleChats(RecentChatData?._id);
-  const { data: getMyData , isLoading : getMyDataLoading , isError : getMyDataError , isSuccess : getMyDataSuccess } = useMe();
+  const {
+    data: getMyData,
+    isLoading: getMyDataLoading,
+    isError: getMyDataError,
+    isSuccess: getMyDataSuccess,
+  } = useMe();
 
   const handleMessageChange = async (event) => {
     console.log(event.target.value);
@@ -26,7 +35,6 @@ const Conversation = ({ RecentChatData }) => {
   };
 
   const handleSendMessage = async () => {
- 
     const data = {
       recepientIds: getSingleChat[0]?.members,
       chatId: getSingleChat[0]?._id,
@@ -35,56 +43,43 @@ const Conversation = ({ RecentChatData }) => {
     };
     console.log(data);
     socket.emit("send_new_message", data);
-    let pushMessage = [...AllMessages, { content: message, sender: getMyData?._id }];
-    setMessage("")
-    setAllMessages(pushMessage);
+    dispatch(AddChatMessageData(data));
+    setMessage("");
   };
 
-  // const handleData = async(data)=>{
-  //   console.log(data,RecentChatData)
-  //   if(data?.chatId == RecentChatData?._id){
-  //     return true;
-  //   }
-  //   return false
-  // }
+  const handleData = async (data) => {
+    console.log(data, RecentChatData);
+    if (data?.chatId == RecentChatData?._id) {
+      return true;
+    }
+    return false;
+  };
 
   useEffect(() => {
     socket.connect();
 
-    // socket.on("test", (data) => {
-    //   console.log(data, "test");
-    //   // let pushMessage = [...AllMessages, { content: data, sender: "other" }];
-    //   setAllMessages((prevMessages) => [...prevMessages, { content: data, sender: "other" }]);
-    // });
-    
-
-    socket.on("receieve_message", async(data) => {
-      console.log(data, "received message");
-      console.log(RecentChatData)
-      // const result = await handleData(data)
-      // console.log(result)
-      // if(result) {
-      //   console.log("YESS")
-        setAllMessages((prevMessages) => [...prevMessages, {content : data?.content , sender : data?.sender}]);
-      // }
-      // let pushMessage = [...AllMessages, { content: data, sender: "other" }];
+    socket.on("receieve_message", (data) => {
+      console.log(data?.content, "received message");
+      dispatch(AddChatMessageData(data));
+      // console.log(RecentChatData);
       // setAllMessages((prevMessages) => [
       //   ...prevMessages,
-      //   { content: data, sender: "other" },
+      //   { content: data?.content, sender: data?.sender },
       // ]);
     });
+
     return () => {
       socket.disconnect();
     };
   }, []);
 
-  console.log(AllMessages);
-
   return (
     <div className="flex-1 flex relative h-full border rounded-md shadow-lg bg-white ">
       {!getSingleChatError &&
       !getSingleChatLoading &&
-      getSingleChatSuccess && !getMyDataLoading && getMyDataSuccess &&
+      getSingleChatSuccess &&
+      !getMyDataLoading &&
+      getMyDataSuccess &&
       getSingleChat.length > 0 ? (
         <>
           <div className="flex gap-2 absolute top-0 items-end w-full h-[60px]  p-1 bg-blue-50">
@@ -106,7 +101,7 @@ const Conversation = ({ RecentChatData }) => {
           </div>
           <div className="pt-20 px-2 pb-14  w-full h-full overflow-auto scrollbar-hide ">
             <div className="flex flex-col gap-2">
-              {AllMessages.map((el, i) => {
+              {AllMessage.map((el, i) => {
                 if (el.sender !== getMyData?._id) {
                   return (
                     <div key={i} className=" flex  pl-2">
@@ -135,19 +130,19 @@ const Conversation = ({ RecentChatData }) => {
               })}
             </div>
           </div>
-          
-          <div  className="flex absolute bg-blue-100 w-full h-[50px] border rounded-2xl bottom-0 px-2 py-1">
+
+          <div className="flex absolute bg-blue-100 w-full h-[50px] border rounded-2xl bottom-0 px-2 py-1">
             <div className="h-full text-gray-600 w-[50px] flex items-center">
               <FaCamera className="h-7 w-7" />
             </div>
             <div className="flex-1 relative">
               <Input
-              isRequired
+                isRequired
                 radius="sm"
                 className="absolute w-full h-full "
                 size={"none"}
                 onChange={(e) => handleMessageChange(e)}
-                value = {message}
+                value={message}
                 variant=""
                 placeholder="Type a message"
               />
@@ -155,7 +150,7 @@ const Conversation = ({ RecentChatData }) => {
             <div className="h-full text-gray-600 w-[100px] flex justify-end">
               <Button
                 type="submit"
-                onClick={()=>handleSendMessage()}
+                onClick={() => handleSendMessage()}
                 radius="sm"
                 className="bg-blue-400 text-white"
               >
@@ -163,7 +158,6 @@ const Conversation = ({ RecentChatData }) => {
               </Button>
             </div>
           </div>
-          
         </>
       ) : !getSingleChatError && getSingleChatLoading ? (
         <div>

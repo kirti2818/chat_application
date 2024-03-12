@@ -4,6 +4,7 @@ const initialState = {
     data : {},
     OtherMemberId : "",
     RecentChatData : {},
+    ChatMessageData : [],
 }
 
 const ChatSlice = createSlice({
@@ -15,9 +16,18 @@ const ChatSlice = createSlice({
         },
         RecentChatData : (state,action)=>{
             state.RecentChatData = action.payload
+        },
+        AddChatMessageData : (state,action)=>{
+            state.ChatMessageData = [...state.ChatMessageData , action.payload]
+        },
+        GetChatMessageData : (state,action)=>{
+            // forEach((el)=>)
+            // if(state.RecentChatData._id == state.ChatMessageData._id){
+               
+            // }
         }
     })
 })
 
-export const {AddOtherMemberId,RecentChatData} = ChatSlice.actions;
+export const {AddOtherMemberId,RecentChatData,AddChatMessageData} = ChatSlice.actions;
 export default ChatSlice.reducer;

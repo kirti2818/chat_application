@@ -9,7 +9,13 @@ import UsersSidebar from "./(site)/components/UsersSidebar";
 import Conversation from "./(site)/components/Conversation";
 import Sidebar from "./(site)/components/Sidebar";
 
+// const socket = io("http://localhost:8080",{
+//   withCredentials:true
+// });
+
 export default function Home() {
+ 
+ 
   const { data: getData, isLoading: getDataLoading } = useMe();
   const RecentChatData = useSelector((store) => store.chatSlice.RecentChatData);
   console.log(RecentChatData);
@@ -22,7 +28,14 @@ export default function Home() {
   }, [getDataLoading, getData]);
 
   useEffect(() => {
-    socket.connect();
+    socket.connect()
+  //  socket.on("connect",(data)=>{
+  //   console.log("Hellooooo")
+  //  })
+  //  socket.on("receieve_message",(Data)=>{
+  //   console.log(Data,"RECEIVE MESSAG")
+  //  })
+  
     return () => {
       socket.disconnect();
     };
