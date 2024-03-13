@@ -12,8 +12,8 @@ const Conversation = ({ RecentChatData }) => {
   const dispatch = useDispatch();
   console.log(RecentChatData);
   const [allMessages, setAllMessages] = useState([]);
-  const AllMessage = useSelector((store) => store.chatSlice.ChatMessageData);
-  console.log(AllMessage, "09876543234567",allMessages);
+  const RecievedAllMessage = useSelector((store) => store.chatSlice.ChatMessageData);
+  console.log(RecievedAllMessage, "09876543234567", allMessages);
   const [message, setMessage] = useState();
   const {
     data: getSingleChat,
@@ -57,7 +57,7 @@ const Conversation = ({ RecentChatData }) => {
 
   useEffect(() => {
     socket.connect();
-
+    console.log("in conversation");
     socket.on("receieve_message", (data) => {
       console.log(data?.content, "received message");
       dispatch(AddChatMessageData(data));
@@ -74,13 +74,15 @@ const Conversation = ({ RecentChatData }) => {
   }, []);
 
   useEffect(() => {
-    if (RecentChatData && AllMessage?.length>0) {
-      console.log("hello",AllMessage)
-      const filteredMessages = AllMessage.filter(message => message.chatId === RecentChatData?._id);
-      console.log(filteredMessages)
+    if (RecentChatData && RecievedAllMessage?.length > 0) {
+      console.log("hello", RecievedAllMessage);
+      const filteredMessages = RecievedAllMessage.filter(
+        (message) => message.chatId === RecentChatData?._id
+      );
+      console.log(filteredMessages);
       setAllMessages(filteredMessages);
     }
-  }, [AllMessage,RecentChatData]);
+  }, [RecievedAllMessage,RecentChatData]);
 
   return (
     <div className="flex-1 flex relative h-full border rounded-md shadow-lg bg-white ">

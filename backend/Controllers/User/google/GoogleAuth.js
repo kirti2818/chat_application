@@ -3,6 +3,7 @@ const UserModel = require("../../../models/User/Auth.Schema");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
+console.log(`${process.env.BACKEND_URL}auth/google/callback`)
 
 passport.use(
   new GoogleStrategy(
@@ -13,7 +14,7 @@ passport.use(
       passReqToCallback: true,
     },
     async function (request, accessToken, refreshToken, profile, done) {
-  
+  console.log("HELLOO")
 
       const Detail = profile._json;
 
