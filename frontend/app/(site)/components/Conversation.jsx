@@ -11,10 +11,10 @@ import { AddChatMessageData } from "@/Slices/User.Slice";
 const Conversation = ({ RecentChatData }) => {
   const dispatch = useDispatch();
   console.log(RecentChatData);
-  const [chatData, setChatData] = useState(RecentChatData);
+  const [allMessages, setAllMessages] = useState([]);
   const AllMessage = useSelector((store) => store.chatSlice.ChatMessageData);
-  console.log(AllMessage, "09876543234567");
-  const [message, setMessage] = useState([]);
+  console.log(AllMessage, "09876543234567",allMessages);
+  const [message, setMessage] = useState();
   const {
     data: getSingleChat,
     isLoading: getSingleChatLoading,
@@ -73,6 +73,15 @@ const Conversation = ({ RecentChatData }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (RecentChatData && AllMessage?.length>0) {
+      console.log("hello",AllMessage)
+      const filteredMessages = AllMessage.filter(message => message.chatId === RecentChatData?._id);
+      console.log(filteredMessages)
+      setAllMessages(filteredMessages);
+    }
+  }, [AllMessage,RecentChatData]);
+
   return (
     <div className="flex-1 flex relative h-full border rounded-md shadow-lg bg-white ">
       {!getSingleChatError &&
@@ -101,7 +110,7 @@ const Conversation = ({ RecentChatData }) => {
           </div>
           <div className="pt-20 px-2 pb-14  w-full h-full overflow-auto scrollbar-hide ">
             <div className="flex flex-col gap-2">
-              {AllMessage.map((el, i) => {
+              {allMessages?.map((el, i) => {
                 if (el.sender !== getMyData?._id) {
                   return (
                     <div key={i} className=" flex  pl-2">
