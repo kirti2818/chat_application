@@ -20,9 +20,9 @@ const Sidebar = ({ children }) => {
   return (
     <>
       {isDesktopOrLaptop ? (
-        <ScreenSidebar children={children} />
+        <ScreenSidebar>{children}</ScreenSidebar>
       ) : (
-        <MobileSidebar children={children} />
+        <MobileSidebar>{children}</MobileSidebar>
       )}
     </>
   );
