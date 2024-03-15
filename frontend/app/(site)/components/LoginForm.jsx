@@ -35,7 +35,7 @@ const LoginForm = () => {
     <div className="flex justify-center w-[300px] sm:w-[500px] bg-white border rounded-xl p-1 py-5 sm:p-3 sm:py-7">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-5 w-[200px] sm:w-[400px]"
+        className="flex flex-col gap-5 w-[250px] sm:w-[400px]"
       >
         <Controller
           name="email"

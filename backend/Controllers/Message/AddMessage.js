@@ -14,6 +14,8 @@ const AddMessage = async (data) => {
       sender,
       chat: chatId,
     });
+
+    const AddLastMessageToChat = await ChatModel.findByIdAndUpdate(chatId,{latestMessage : AddNewMessage?._id},{new : true})
     return true;
   } catch (error) {
     console.log(error.message);

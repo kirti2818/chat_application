@@ -1,16 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
-import { IoSettings } from "react-icons/io5";
-import { FaSearch } from "react-icons/fa";
-import { Tooltip } from "@nextui-org/react";
-import DynamicModal from "@/core/DynamicModal";
-import SearchPage from "./SearchPage";
-import socket from "@/utils/Socket";
-import { IoIosNotifications } from "react-icons/io";
+import React from "react";
 import { useMediaQuery } from "react-responsive";
 import ScreenSidebar from "./ScreenSidebar";
 import MobileSidebar from "./MobileSidebar";
+import dynamic from "next/dynamic";
 
 const Sidebar = ({ children }) => {
   const isDesktopOrLaptop = useMediaQuery({
@@ -28,4 +20,6 @@ const Sidebar = ({ children }) => {
   );
 };
 
-export default Sidebar;
+export default dynamic(() => Promise.resolve(Sidebar), {
+  ssr: false
+})

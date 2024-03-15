@@ -25,6 +25,7 @@ const AccessChat = async (req, res) => {
       isGroupChat: false,
       members: [userId, OtherMemberId],
     });
+    console.log(findChat)
     return res.status(200).json({message : "Chat Created And Access Successfully",data : CreateChat,status : true})
   } catch (error) {
     return res.status(400).json({ message: error.message, status: false });

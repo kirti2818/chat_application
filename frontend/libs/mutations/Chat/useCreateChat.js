@@ -11,6 +11,7 @@ const useCreateChat = () => {
     mutationFn: async (data) => {
       console.log(data);
       const response = await api.post("chat/accessChat", data);
+      console.log(response)
       await dispatch(RecentChatData({...response?.data?.data}))
       return response?.data;
     },

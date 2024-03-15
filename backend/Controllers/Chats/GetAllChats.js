@@ -44,6 +44,14 @@ const GetAllChats = async (req, res) => {
           },
         },
   
+        {$lookup : {
+          from : "messages",
+          localField : "latestMessage",
+          foreignField : "_id",
+          as : "latestMessage"
+        }},
+        {$unwind : {path : "$latestMessage" , preserveNullAndEmptyArrays : true}},
+
         {
           $addFields: {
             members: {
@@ -59,6 +67,7 @@ const GetAllChats = async (req, res) => {
                 else: "$members",
               },
             },
+            
           },
         },
        
@@ -87,8 +96,6 @@ const GetAllChats = async (req, res) => {
         .status(200)
         .json({ message: "Get All Chats", status: true, data: findAllChat });
     
-   
-   
   } catch (error) {
     return res.status(400).json({ message: error.message, status: false });
   }
