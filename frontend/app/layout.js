@@ -1,7 +1,6 @@
 import { Inter,Poppins } from "next/font/google";
 import "./globals.css";
 import TanstackQuery from "@/providers/TanstackQuery";
-import dynamic from "next/dynamic";
 import NxtProvider from "@/providers/NextProvider";
 import { Toaster } from "react-hot-toast";
 import StoreProvider from "@/providers/StoreProvider";

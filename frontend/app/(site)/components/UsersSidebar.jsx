@@ -1,27 +1,45 @@
+import useCreateChat from "@/libs/mutations/Chat/useCreateChat";
 import useGetAllChats from "@/libs/queries/Chat/GetAllChats";
 import { Tooltip } from "@nextui-org/react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 
-const UsersSidebar = ({ RecentChatData }) => {
+const UsersSidebar = ({ RecentChatData,setOpenSearchModal }) => {
   const [search, setSearch] = useState();
+  const [show , setShow] = useState(true)
+  const dispatch = useDispatch()
+  const {mutate : CreateChat , isLoading : CreateChatLoading,isError : CreateChatLoadingError,isSuccess:CreateChatSuccess } = useCreateChat()
   const {
     data: GetAllChats,
     isLoading: GetAllChatsLoading,
     isError: GetAllChatsError,
     isSuccess: GetAllChatsSuccess,
   } = useGetAllChats(search);
+
+
+  const handleChatUser = async(id)=>{
+    dispatch(AddOtherMemberId(id))
+    CreateChat({OtherMemberId : id})
+
+  }
+
   console.log(RecentChatData);
 
   return (
-    <div className="w-[200px] border rounded-lg shadow-lg bg-white p-1 h-full overflow-auto scrollbar-hide">
+    <div className={`${show ? "w-[200px]" : "w-[60px]" } border rounded-lg relative shadow-lg bg-white p-1 h-full overflow-auto scrollbar-hide flex flex-col gap-1`}>
+      <div>
+       {show ?  <FaArrowCircleLeft onClick={()=>setShow(false)} className="h-6 w-6 text-blue-500 absolute right-1" /> :  <FaArrowCircleRight onClick={()=>setShow(true)} className="h-6 w-6 text-blue-500 absolute right-1" />}
+      </div>
       {!GetAllChatsLoading &&
         !GetAllChatsError &&
         GetAllChatsSuccess &&
-        GetAllChats?.map((el,i) => {
+        GetAllChats?.map((el, i) => {
           return (
-            <Tooltip
-            key={i} 
+            <>
+            {el?.lastMessage && el?.lastMessage?.length>0 && <Tooltip
+              key={i}
               placement={"right-end"}
               showArrow
               content={
@@ -33,7 +51,8 @@ const UsersSidebar = ({ RecentChatData }) => {
               color="primary"
             >
               <div
-                className={`flex gap-2 items-end w-full h-[70px] border-b border-gray-400 p-1 ${
+              onClick={()=>handleChatUser(el?._id)}
+                className={`flex gap-2 border-b rounded-md ${show ? "items-end" :"items-center rounded-s-3xl"} w-full h-[70px]  border-gray-400 p-1 ${
                   el._id === RecentChatData?._id && `bg-blue-400`
                 }`}
               >
@@ -44,24 +63,25 @@ const UsersSidebar = ({ RecentChatData }) => {
                   width={50}
                   height={50}
                 />
-                <div>
-                  <p
-                    className={`text-blue-400 text-[16px] font-semibold ${
-                      el._id === RecentChatData?._id && `text-white`
-                    }`}
-                  >
-                    {el?.isGroupChat ? "Group" : el?.members[0]?.name}
-                  </p>
-                  <p
-                    className={`text-gray-500 text-[14px] w-[120px] truncate ${
-                      el._id === RecentChatData?._id && `text-gray-700`
-                    }`}
-                  >
-                    Hello, How are you ?
-                  </p>
-                </div>
+               {show &&  <div>
+                <p
+                  className={`text-blue-400 text-[16px] font-semibold ${
+                    el._id === RecentChatData?._id && `text-white`
+                  }`}
+                >
+                  {el?.isGroupChat ? "Group" : el?.members[0]?.name}
+                </p>
+                <p
+                  className={`text-gray-500 text-[14px] w-[120px] truncate ${
+                    el._id === RecentChatData?._id && `text-gray-700`
+                  }`}
+                >
+                  Hello, How are you ?
+                </p>
+              </div>}
               </div>
-            </Tooltip>
+            </Tooltip>}
+            </>
           );
         })}
     </div>

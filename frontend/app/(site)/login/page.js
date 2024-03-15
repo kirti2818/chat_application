@@ -10,7 +10,7 @@ const Login = () => {
           <Image src="/messenger.png" alt="Error" width={50} height={100} fit />
         </div>
 
-        <p className="text-2xl text-gray-900 font-bold mt-4">
+        <p className="text-lg sm:text-2xl text-gray-900 font-bold mt-4">
           Sign In to your account
         </p>
       </div>

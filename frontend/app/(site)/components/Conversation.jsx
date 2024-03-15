@@ -85,7 +85,7 @@ const Conversation = ({ RecentChatData }) => {
   }, [RecievedAllMessage,RecentChatData]);
 
   return (
-    <div className="flex-1 flex relative h-full border rounded-md shadow-lg bg-white ">
+    <div className="flex-1 flex h-full relative border rounded-md shadow-lg bg-white ">
       {!getSingleChatError &&
       !getSingleChatLoading &&
       getSingleChatSuccess &&

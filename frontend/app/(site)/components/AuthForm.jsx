@@ -26,10 +26,10 @@ const AuthForm = () => {
 
   },[CreateUserSuccess])
   return (
-    <div className="flex justify-center w-[500px] bg-white border rounded-xl p-3 py-7">
+    <div className="flex justify-center w-[300px] sm:w-[500px] bg-white border rounded-xl p-1 py-5 sm:p-3 sm:py-7">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-5 w-[400px]"
+        className="flex flex-col gap-5 w-[200px] sm:w-[400px]"
       >
       <Controller
           name="name"
@@ -96,7 +96,7 @@ const AuthForm = () => {
             </Link>
           </div>
         </div>
-          <p className=" text-[14px] font-semibold">
+          <p className="text-[12px] sm:text-[14px] font-semibold">
             Already Have Account?{" "}
             <span>
               <Link href={"/login"}>Login</Link>

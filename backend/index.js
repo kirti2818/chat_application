@@ -43,7 +43,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const connect = require("./config/db");
+const connect = require("./configuring/db");
 const allRoutes = require("./routes");
 const AddAndUpdateSocket = require("./Controllers/Socket/Adduser");
 const DeleteUserFromSocket = require("./Controllers/Socket/DeleteUserFromSocket");

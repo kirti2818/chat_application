@@ -20,18 +20,18 @@ const SearchPage = ({setOpenSearchModal}) => {
 
 
 
-  const handleChatUser = async(id)=>{
-    dispatch(AddOtherMemberId(id))
-    CreateChat({OtherMemberId : id})
+    const handleChatUser = async(id)=>{
+      dispatch(AddOtherMemberId(id))
+      CreateChat({OtherMemberId : id})
 
-  }
-
-  useEffect(()=>{
-    if(CreateChatSuccess){
-      setOpenSearchModal(false)
     }
 
-  },[CreateChatSuccess])
+    useEffect(()=>{
+      if(CreateChatSuccess){
+        setOpenSearchModal(false)
+      }
+
+    },[CreateChatSuccess])
 
   return (
     <div className="flex flex-col gap-5 ">

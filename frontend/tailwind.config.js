@@ -10,9 +10,15 @@ module.exports = withMT({
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      
+    theme: {
+    screens: {
+      'small': '640px',   // Small devices (phones)
+      'md': '768px',   // Medium devices (tablets)
+      'large': '1024px',  // Large devices (desktops)
+      'xl': '1280px',  // Extra large devices (large desktops)
+      '2xl': '1536px', // Custom size
     },
+  },
   },
   plugins: [nextui()],
 });
