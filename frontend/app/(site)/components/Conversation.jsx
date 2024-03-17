@@ -84,25 +84,29 @@ const Conversation = ({ RecentChatData }) => {
   }, []);
 
   useEffect(() => {
-    setAllMessages([]);
-    if (getAllMessageSuccess && !getAllMessageLoading && !getAllMessageError) {
-      setAllMessages((prev) => [...prev, ...getAllMessage]);
-    }
+   
     if (RecentChatData && RecievedAllMessage?.length > 0) {
       console.log("hello", RecievedAllMessage);
       const filteredMessages = RecievedAllMessage.filter(
         (message) => message?.chatId === RecentChatData?._id
       );
       console.log(filteredMessages);
-      setAllMessages((prev)=>[...prev,...filteredMessages]);
+      setAllMessages(filteredMessages);
     }
   }, [
     RecievedAllMessage,
     RecentChatData,
-    getAllMessageLoading,
-    getAllMessageError,
-    getAllMessageSuccess,
+    
   ]);
+
+  // useEffect(()=>{
+  //   setAllMessages([]);
+  //   if (getAllMessageSuccess && !getAllMessageLoading && !getAllMessageError) {
+  //     setAllMessages((prev) => [...prev, ...getAllMessage]);
+  //   }
+  // },[getAllMessageLoading,
+  //   getAllMessageError,
+  //   getAllMessageSuccess,])
 
   return (
     <div className="flex-1 flex h-full relative border rounded-md shadow-lg bg-white ">
