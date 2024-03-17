@@ -7,12 +7,22 @@ import socket from "@/utils/Socket";
 import useMe from "@/libs/queries/Auth/useMe";
 import { useDispatch, useSelector } from "react-redux";
 import { AddChatMessageData } from "@/Slices/User.Slice";
+import useGetAllMessage from "@/libs/queries/Message/useGetAllMessage";
 
 const Conversation = ({ RecentChatData }) => {
   const dispatch = useDispatch();
   console.log(RecentChatData);
   const [allMessages, setAllMessages] = useState([]);
-  const RecievedAllMessage = useSelector((store) => store.chatSlice.ChatMessageData);
+  const RecievedAllMessage = useSelector(
+    (store) => store.chatSlice.ChatMessageData
+  );
+  const {
+    data: getAllMessage,
+    isLoading: getAllMessageLoading,
+    isError: getAllMessageError,
+    isSuccess: getAllMessageSuccess,
+  } = useGetAllMessage({ chatId: RecentChatData?._id });
+  console.log(getAllMessage, "GETALLMESSAGE");
   console.log(RecievedAllMessage, "09876543234567", allMessages);
   const [message, setMessage] = useState();
   const {
@@ -74,15 +84,25 @@ const Conversation = ({ RecentChatData }) => {
   }, []);
 
   useEffect(() => {
+    setAllMessages([]);
+    if (getAllMessageSuccess && !getAllMessageLoading && !getAllMessageError) {
+      setAllMessages((prev) => [...prev, ...getAllMessage]);
+    }
     if (RecentChatData && RecievedAllMessage?.length > 0) {
       console.log("hello", RecievedAllMessage);
       const filteredMessages = RecievedAllMessage.filter(
-        (message) => message.chatId === RecentChatData?._id
+        (message) => message?.chatId === RecentChatData?._id
       );
       console.log(filteredMessages);
-      setAllMessages(filteredMessages);
+      setAllMessages((prev)=>[...prev,...filteredMessages]);
     }
-  }, [RecievedAllMessage,RecentChatData]);
+  }, [
+    RecievedAllMessage,
+    RecentChatData,
+    getAllMessageLoading,
+    getAllMessageError,
+    getAllMessageSuccess,
+  ]);
 
   return (
     <div className="flex-1 flex h-full relative border rounded-md shadow-lg bg-white ">

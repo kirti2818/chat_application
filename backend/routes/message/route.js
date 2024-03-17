@@ -7,6 +7,6 @@ const MessageRoutes = express.Router()
 
 MessageRoutes.use(AuthMiddleware)
 MessageRoutes.post("/add_newMessage",AddMessage)
-MessageRoutes.get("/get_allMessages",GetAllMessages)
+MessageRoutes.get("/get_allMessages/:chatId",GetAllMessages)
 
 module.exports = MessageRoutes;
