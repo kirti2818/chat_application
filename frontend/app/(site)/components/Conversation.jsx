@@ -6,13 +6,15 @@ import { FaCamera } from "react-icons/fa";
 import socket from "@/utils/Socket";
 import useMe from "@/libs/queries/Auth/useMe";
 import { useDispatch, useSelector } from "react-redux";
-import { AddChatMessageData } from "@/Slices/User.Slice";
+import { AddChatMessageData, RemoveChatMessageData } from "@/Slices/User.Slice";
 import useGetAllMessage from "@/libs/queries/Message/useGetAllMessage";
 
 const Conversation = ({ RecentChatData }) => {
   const dispatch = useDispatch();
   console.log(RecentChatData);
   const [allMessages, setAllMessages] = useState([]);
+  const [messagesToShow,setMessagesToShow] = useState([])
+  const [initialMessagesFetched, setInitialMessagesFetched] = useState(false);
   const RecievedAllMessage = useSelector(
     (store) => store.chatSlice.ChatMessageData
   );
@@ -37,6 +39,7 @@ const Conversation = ({ RecentChatData }) => {
     isError: getMyDataError,
     isSuccess: getMyDataSuccess,
   } = useMe();
+  console.log(getAllMessageSuccess)
 
   const handleMessageChange = async (event) => {
     console.log(event.target.value);
@@ -84,29 +87,40 @@ const Conversation = ({ RecentChatData }) => {
   }, []);
 
   useEffect(() => {
-   
-    if (RecentChatData && RecievedAllMessage?.length > 0) {
-      console.log("hello", RecievedAllMessage);
+
+    if (RecentChatData && RecievedAllMessage && initialMessagesFetched) {
+      console.log("hello", RecievedAllMessage.length);
       const filteredMessages = RecievedAllMessage.filter(
         (message) => message?.chatId === RecentChatData?._id
       );
-      console.log(filteredMessages);
-      setAllMessages(filteredMessages);
+      console.log(filteredMessages.length);
+      console.log(allMessages.length)
+      setMessagesToShow([...allMessages,...filteredMessages]);
     }
-  }, [
-    RecievedAllMessage,
-    RecentChatData,
-    
-  ]);
+  }, [RecievedAllMessage, RecentChatData,initialMessagesFetched]);
 
-  // useEffect(()=>{
-  //   setAllMessages([]);
-  //   if (getAllMessageSuccess && !getAllMessageLoading && !getAllMessageError) {
-  //     setAllMessages((prev) => [...prev, ...getAllMessage]);
-  //   }
-  // },[getAllMessageLoading,
-  //   getAllMessageError,
-  //   getAllMessageSuccess,])
+  useEffect(()=>{
+    if(RecentChatData){
+      console.log("recent chat data",RecentChatData)
+      
+      setInitialMessagesFetched(false)
+     
+    }
+
+  },[RecentChatData])
+
+  useEffect(() => {
+    if (getAllMessage && getAllMessageSuccess && !initialMessagesFetched) {
+      console.log("hey",getAllMessage.length)
+      setAllMessages([]);
+      setMessagesToShow([])
+      dispatch(RemoveChatMessageData())
+      setAllMessages(getAllMessage);
+      setInitialMessagesFetched(true);
+    }
+  }, [getAllMessageSuccess, initialMessagesFetched]);
+
+  console.log(messagesToShow, "MESSAGES",initialMessagesFetched,allMessages)
 
   return (
     <div className="flex-1 flex h-full relative border rounded-md shadow-lg bg-white ">
@@ -134,9 +148,9 @@ const Conversation = ({ RecentChatData }) => {
               </p>
             </div>
           </div>
-          <div className="pt-20 px-2 pb-14  w-full h-full overflow-auto scrollbar-hide ">
+          <div className="pt-20 px-2 pb-14  w-full h-full overflow-auto ">
             <div className="flex flex-col gap-2">
-              {allMessages?.map((el, i) => {
+              {messagesToShow?.map((el, i) => {
                 if (el.sender !== getMyData?._id) {
                   return (
                     <div key={i} className=" flex  pl-2">

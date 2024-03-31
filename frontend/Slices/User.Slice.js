@@ -25,9 +25,12 @@ const ChatSlice = createSlice({
             // if(state.RecentChatData._id == state.ChatMessageData._id){
                
             // }
-        }
+        },
+        RemoveChatMessageData : (state,action)=>{
+            state.ChatMessageData = []
+        },
     })
 })
 
-export const {AddOtherMemberId,RecentChatData,AddChatMessageData} = ChatSlice.actions;
+export const {AddOtherMemberId,RecentChatData,AddChatMessageData,RemoveChatMessageData} = ChatSlice.actions;
 export default ChatSlice.reducer;
